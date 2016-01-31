@@ -23,17 +23,17 @@
 
 -module(erlrecaptcha).
 -include("../include/constant.hrl").
--export([verify/2]).
+-export([verify/3]).
 
 
-verify(RemoteIp, Response) ->
+verify(RemoteIp, Response,SecretKey) ->
 	application:start(crypto),	
 	application:start(asn1),
     	application:start(public_key),
     	application:start(ssl),
 	inets:start(),
 	Data =	 ?RECAPTHA_API_URL ++ "?"
-		"secret="++ ?RECAPTHA_PRIVATE_KEY ++ "&"
+		"secret="++ SecretKey ++ "&"
 		"remoteip=" ++ RemoteIp ++ "&"
 		"response=" ++ Response,
 	HttpResponse = 
